@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
+
+    public function setAltAttribute($value)
+    {
+        $this->attributes['alt'] = $value ?? $this->attributes['title'];
+    }
+
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
 }
