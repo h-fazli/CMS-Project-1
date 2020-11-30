@@ -12,9 +12,9 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->name,
-            'content' => $this->faker->text,
-            'user_id' => $this->faker->numberBetween(1,20),
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->sentence(20),
+//            'user_id' => $this->faker->numberBetween(1,20),
         ];
     }
 }

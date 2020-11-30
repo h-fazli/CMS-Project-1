@@ -9,6 +9,8 @@ class Image extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function setAltAttribute($value)
     {
         $this->attributes['alt'] = $value ?? $this->attributes['title'];

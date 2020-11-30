@@ -19,7 +19,6 @@ class CreateImagesTable extends Migration
             $table->string('slug',150)->nullable();
             $table->string('path');
             $table->morphs('imageable');
-            $table->timestamps();
         });
     }
 

@@ -12,6 +12,8 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public $timestamps = false;
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
