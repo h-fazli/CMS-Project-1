@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -13,6 +15,8 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        //
+        Category::factory()->count(50)
+            ->has(Image::factory()->count(rand(0,1)))
+            ->create();
     }
 }
