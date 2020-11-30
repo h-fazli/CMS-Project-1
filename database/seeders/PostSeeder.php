@@ -13,10 +13,10 @@ class PostSeeder extends Seeder
 {
     public function run()
     {
-        Post::factory()->count(200)
+        Post::factory()->count(100)
             ->has(Tag::random(rand(3,10)))
             ->has(Category::random(rand(1,5)))
-            ->has(Image::factory()->count(1))
+//            ->has(Image::factory()->count(1))
             ->has(User::rand(1,20))
             ->create();
     }
