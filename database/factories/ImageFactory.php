@@ -11,9 +11,11 @@ class ImageFactory extends Factory
 
     public function definition()
     {
+        $path = $this->faker->image(storage_path() . env('UPLOAD_FOLDER'));
+        $path = explode("/storage/", $path);
         return [
             'title'=> $this->faker->word,
-            'path' => $this->faker->image(storage_path(). '/app/public/' . env('UPLOAD_FOLDER')),
+            'path' =>  "storage/" . end($path),
         ];
     }
 }

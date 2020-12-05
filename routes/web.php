@@ -17,7 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('posts',function () {
-    $posts = \App\Models\Post::with(['tags','categories','authors'])->get();
-        return view('posts',compact('posts',$posts));
-})->name('posts');
+Route::resource('posts','PostController')->only('index','show','destroy');
+//dd(storage_path());
+dd();

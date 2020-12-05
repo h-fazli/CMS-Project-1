@@ -17,7 +17,7 @@
         @foreach($posts as $post)
         <tr>
             <td>{{$post->id}}</td>
-            <td>{{$post->title}}</td>
+            <td><a href="{{route('posts.show',$post)}}">{{$post->title}}</a></td>
             <td>{{$post->slug}}</td>
             <td>{{$post->authors->name}}</td>
             <td>@foreach($post->categories as $category)
