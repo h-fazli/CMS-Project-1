@@ -13,7 +13,7 @@ class ImageFactory extends Factory
     {
         return [
             'title'=> $this->faker->word,
-            'path' => $this->faker->image(storage_path() . env('UPLOAD_FOLDER')),
+            'path' => $this->faker->image(storage_path(). '/app/public/' . env('UPLOAD_FOLDER')),
         ];
     }
 }

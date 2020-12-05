@@ -14,7 +14,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'content' => $this->faker->sentence(20),
-//            'user_id' => $this->faker->numberBetween(1,20),
+            'user_id' => $this->faker->numberBetween(1,20),
         ];
     }
 }

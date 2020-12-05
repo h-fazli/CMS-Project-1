@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('posts',function () {
+    $posts = \App\Models\Post::with(['tags','categories','authors'])->get();
+        return view('posts',compact('posts',$posts));
+})->name('posts');
