@@ -15,7 +15,7 @@ class ImageFactory extends Factory
         $path = explode("/storage/", $path);
         return [
             'title'=> $this->faker->word,
-            'path' =>  "storage/" . end($path),
+            'path' =>  env('APP_URL') . "/storage/" . end($path),
         ];
     }
 }

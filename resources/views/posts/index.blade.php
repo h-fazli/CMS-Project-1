@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($posts as $post)
+        @foreach($user->posts as $post)
         <tr>
             <td>{{$post->id}}</td>
             <td><a href="{{route('posts.show',$post)}}">{{$post->title}}</a></td>
