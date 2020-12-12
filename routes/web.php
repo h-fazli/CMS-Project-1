@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('posts','PostController')->only('index','show','destroy');
+
 //dd(storage_path());
 
 Route::get('mobile',[\App\Http\Controllers\AuthController::class,'getMobile'])->name('getmobile');
@@ -28,3 +28,20 @@ Route::get('code',[\App\Http\Controllers\AuthController::class,'getCode'])->name
 Route::post('checkcode',[\App\Http\Controllers\AuthController::class,'checkCode'])->name('checkcode');
 Route::get('register',[\App\Http\Controllers\AuthController::class,'showRegister'])->name('showregister');
 Route::post('register',[\App\Http\Controllers\AuthController::class,'register'])->name('register');
+
+Route::prefix('admin')->middleware(['auth','Role:admin'])->group(function (){
+    Route::resource('users',\App\Http\Controllers\UserController::class);
+    Route::resource('posts',\App\Http\Controllers\PostController::class)->only('index','show','destroy');
+    Route::post('activate',[\App\Http\Controllers\UserController::class,'activate'])->name('activate');
+    Route::post('deactivate',[\App\Http\Controllers\UserController::class,'deactivate'])->name('deactivate');
+});
+
+Route::prefix('user')->middleware(['auth','Role:user'])->group(function (){
+
+});
+
+//Route::resource('admin/users',\App\Http\Controllers\UserController::class,['middleware' => ['auth','Role:admin']]);
+
+//Route::get('test',function () {
+//   return view('admin.users.index');
+//});

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = \App\Models\Post::with(['tags','categories','authors'])->get();
+        $posts = \App\Models\Post::with(['tags','categories','authors'])->paginate(10);
         return view('posts.index',compact('posts',$posts));
     }
 
@@ -24,11 +25,23 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-//        $path = $post->images->path;
-//        $path = env('APP_URL') . "/" . $path;
-
         return view('posts.show')->with('post',$post);
     }
+
+    public function activate(Post $post)
+    {
+        $post->isActive = true;
+        $post->save();
+
+    }
+
+    public function deactivate(Post $post)
+    {
+        $post->isActive = false;
+        $post->save();
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

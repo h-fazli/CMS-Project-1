@@ -21,34 +21,42 @@ class AuthController extends Controller
     {
         $user = \App\Models\User::where('mobile','=',$request->get('mobile'))->first();
 
-        if ($user)
-        {
+        if ($user) {
             $mobile = $user->mobile;
             $id = $user->id;
-           session([
-               'mobile'=>$mobile,
+            session([
+                'mobile' => $mobile,
                 'id' => $id]);
-           return redirect(route('getpassword'));
-        }else{
+
+            if ($user->isActive == false)
+            {
+                return redirect()->back()->with('error','you have been deactivated by admin!');
+            }
+
+            return redirect(route('getpassword'))->with('mobile',$mobile);
+        }
             $mobile = $request->get('mobile');
             session(['mobile'=>$mobile]);
             $code = rand(10000,99999);
             Log::info("$mobile: $code");
             Cache::put($mobile,$code,60);
             return redirect(route('getcode'));
-        }
+
     }
 
-    public function getPassword()
+    public function getPassword($mobile)
     {
-        return view('auth.password');
+        return view('auth.password')->with('mobile',$mobile);
     }
 
-    public function checkPassword(Request $request)
+    public function checkPassword(Request $request,$mobile)
     {
-        $mobile = session('mobile');
-        $id = session('id');
-        $user = User::find($id);
+//        $mobile = session('mobile');
+//        $id = session('id');
+//        $user = User::find($id);
+//          dd($mobile = $request->get('mobile'));
+//          $mobile = $request->get('mobile');
+          $user = User::where('mobile', $mobile)->first();
 
         if (Auth::attempt(['mobile' => $mobile, 'password' => $request->get('password')]))
             return view('posts.index')->with('user', $user);
@@ -88,6 +96,12 @@ class AuthController extends Controller
                 'password' => $request->password,
         ]);
 
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect(route('getmobile'));
     }
 
 
