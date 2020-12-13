@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="{{route('checkpassword',$mobile)}}" method="post">
+    <form action="{{route('checkpassword',['mobile' => $mobile])}}" method="post">
         @csrf
         <div class="form-group col-3">
             <label for="password">Enter Your Password</label>

@@ -16,9 +16,11 @@
             <td>{{$user->isActive}}</td>
             <td>
                 <form action="{{route('admin.users.activate')}}" method="post">
+                    @csrf
                     <button type="button" class="btn btn-outline-success">Activate</button>
                 </form>
                 <form action="{{route('admin.users.deactivate')}}" method="post">
+                    @csrf
                     <button type="button" class="btn btn-outline-danger">Deactivate</button>
                 </form>
             </td>

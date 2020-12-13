@@ -28,16 +28,16 @@ class PostController extends Controller
         return view('posts.show')->with('post',$post);
     }
 
-    public function activate(Post $post)
+    public function publish(Post $post)
     {
-        $post->isActive = true;
+        $post->isPublished = true;
         $post->save();
 
     }
 
-    public function deactivate(Post $post)
+    public function unpublish(Post $post)
     {
-        $post->isActive = false;
+        $post->isPublished = false;
         $post->save();
     }
 

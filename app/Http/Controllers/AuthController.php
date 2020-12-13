@@ -23,17 +23,13 @@ class AuthController extends Controller
 
         if ($user) {
             $mobile = $user->mobile;
-            $id = $user->id;
-            session([
-                'mobile' => $mobile,
-                'id' => $id]);
 
             if ($user->isActive == false)
             {
                 return redirect()->back()->with('error','you have been deactivated by admin!');
             }
 
-            return redirect(route('getpassword'))->with('mobile',$mobile);
+            return redirect()->route('getpassword',['mobile' => $mobile]);
         }
             $mobile = $request->get('mobile');
             session(['mobile'=>$mobile]);
@@ -44,23 +40,21 @@ class AuthController extends Controller
 
     }
 
-    public function getPassword($mobile)
+    public function getPassword(Request $request)
     {
-        return view('auth.password')->with('mobile',$mobile);
+        return view('auth.password')->with('mobile',$request->mobile);
     }
 
-    public function checkPassword(Request $request,$mobile)
+    public function checkPassword(Request $request)
     {
-//        $mobile = session('mobile');
-//        $id = session('id');
-//        $user = User::find($id);
-//          dd($mobile = $request->get('mobile'));
-//          $mobile = $request->get('mobile');
+          $mobile = $request->get('mobile');
           $user = User::where('mobile', $mobile)->first();
 
         if (Auth::attempt(['mobile' => $mobile, 'password' => $request->get('password')]))
+        {
             return view('posts.index')->with('user', $user);
-        else
+        }
+
             return redirect()->back();
     }
 
@@ -77,9 +71,9 @@ class AuthController extends Controller
         if ($code == null || $cacheCode == null || $code != $cacheCode)
         {
             return redirect(route('getmobile'))->with('error','Please Try Again');
-        }else{
-            return redirect(route('register'));
         }
+            return redirect(route('register'));
+
     }
 
     public function showRegister()
@@ -101,7 +95,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect(route('getmobile'));
+        return redirect()->route('getmobile');
     }
 
 
